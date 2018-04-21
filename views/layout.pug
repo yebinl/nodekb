@@ -1,0 +1,55 @@
+doctype html
+html
+	head
+		title NodeKB
+		link(rel = 'stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.css')
+		link(rel = 'stylesheet' href='/css/style.css')
+	body
+		header
+			nav.navbar.navbar-expand-md.navbar-dark.bg-dark
+				a.navbar-brand(href='#' style='font-family:"Times New Roman"') Mega-Blog
+				button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarCollapse', aria-controls='navbarCollapse', aria-expanded='false', aria-label='Toggle navigation')
+					span.navbar-toggler-icon
+				#navbarCollapse.collapse.navbar-collapse
+					ul.navbar-nav.mr-auto
+						li.nav-item.active
+							a.nav-link(href='/')
+								| Home 
+								span.sr-only (current)
+						if user
+							li.nav-item
+								a.nav-link(href='/articles/add') Add
+						//li.nav-item
+							a.nav-link.disabled(href='#') Disabled
+					ul.navbar-nav.navbar-right
+						if user
+							li.nav-item
+								a.nav-link(href='/users/logout') Logout
+							li.nav-item
+								a.nav-link(href='/users/account')= user.username
+						else
+							li.nav-item
+								a.nav-link(href='/users/register') Register
+							li.nav-item
+								a.nav-link(href='/users/login') Login
+					form.form-inline.mt-2.mt-md-0(method = 'POST', action='/articles/search')
+						input.form-control.mr-sm-2(type='text', placeholder='Search the title', aria-label='Search', name = 'search')
+						button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
+		br
+		.container
+			
+			!= messages('message', locals)
+			if errors
+				each error, i in errors
+					div(class='alert alert-danger') #{error.msg}
+							
+			block content
+			br
+
+		footer.footer
+			.container(style='text-align:center')
+				span.copyright.text-muted(style='font-family:"Times New Roman"') Copyright &nbsp;&copy; &nbsp;www.Mega-Blog.com &nbsp;&nbsp;2018-2020		
+		script(src='https://code.jquery.com/jquery-3.3.1.js', integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous")
+		script(src='/bower_components/bootstrap/assets/js/vendor/popper.min.js')
+		script(src='/bower_components/bootstrap/dist/js/bootstrap.min.js')
+		script(src='/js/main.js')
